@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c3f6e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Anglais 3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<title>Anglais 3e année — Unité 1</title>
+<style>
+:root{
+  --ink:#16233a; --mut:#5c6b84; --line:#dfe6f0;
+  --bg1:#eef4ff; --bg2:#f7f2ff;
+  --ok:#1f9d55; --okbg:#e3f7ea; --no:#d9463c; --bg-bad:#fdeae8;
+  --card:#fff; --radius:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:linear-gradient(160deg,var(--bg1),var(--b2,#f3eaff));
+  color:var(--ink); overflow:clip;
+  -webkit-text-size-adjust:100%;
+}
+#app{height:100dvh;display:flex;flex-direction:column;max-width:620px;margin:0 auto;width:100%}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ---------- écran d'accueil ---------- */
+#home{display:flex;flex-direction:column;height:100%;min-height:0;padding:0 12px 8px;gap:8px}
+.hhead{padding:10px 4px 6px;display:flex;align-items:center;gap:10px}
+.hhead .cap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.hhead h1{font-size:clamp(17px,5.2vw,22px);margin:0;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+.hhead .sub{font-size:12px;color:var(--mut);margin-top:2px}
+.starbox{margin-left:auto;display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:5px 11px;font-weight:800;font-size:14px;min-width:66px;justify-content:center}
+.starbox svg{width:15px;height:15px;fill:#f5b301}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;flex:1;min-height:0;align-content:stretch;grid-template-rows:repeat(3,1fr) auto}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:9px 10px;
+  display:flex;flex-direction:column;justify-content:center;gap:5px;text-align:left;
+  box-shadow:0 2px 6px rgba(22,35,58,.06);min-height:0;overflow:clip;position:relative}
+.mcard .ico{font-size:clamp(34px,11vw,54px);line-height:1}
+.mcard .nm{font-weight:800;font-size:clamp(14.5px,4.3vw,19px);line-height:1.12;margin-top:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .pg{font-size:11px;color:var(--mut);margin-top:1px;font-weight:700}
+.mcard .desc{font-size:clamp(11px,2.9vw,13px);color:#7e8ba1;margin-top:4px;line-height:1.28;font-weight:600}
+.mcard .stars{margin-top:3px;display:flex;gap:3px;height:13px}
+.mcard .stars svg{width:13px;height:13px;fill:#dde4ee}
+.mcard .stars svg.on{fill:#f5b301}
+.mcard:active{filter:brightness(.96)}
+.mcard .bar{position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:16px 0 0 16px}
+.defi{grid-column:1/-1;background:linear-gradient(120deg,#1c3f6e,#3a6ea8);color:#fff;border:0;
+  border-radius:16px;padding:9px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 3px 10px rgba(28,63,110,.28)}
+.defi .ico{font-size:24px}
+.defi .t{font-weight:800;font-size:14.5px;line-height:1.1}
+.defi .s{font-size:11.5px;opacity:.85;margin-top:2px}
+.defi .stars{margin-left:auto;display:flex;gap:2px}
+.defi .stars svg{width:12px;height:12px;fill:rgba(255,255,255,.32)}
+.defi .stars svg.on{fill:#f7c948}
+.reset{margin-top:7px;font-size:11px;color:var(--mut);text-decoration:underline;align-self:flex-start}
+
+/* ---------- entête commune ---------- */
+.top{display:flex;align-items:center;gap:8px;padding:8px 10px 6px;flex:0 0 auto}
+.iconbtn{width:36px;height:36px;border-radius:11px;background:#fff;border:1px solid var(--line);
+  display:grid;place-items:center;flex:0 0 auto}
+.iconbtn svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.top .ttl{font-weight:800;font-size:15px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sc{margin-left:auto;font-weight:800;font-size:13px;color:var(--mut);white-space:nowrap;min-width:52px;text-align:right}
+
+/* ---------- leçon ---------- */
+#lesson{display:none;flex-direction:column;height:100%;min-height:0}
+#lesson.on{display:flex}
+.lbody{flex:1;min-height:0;overflow-y:auto;padding:2px 12px 12px;-webkit-overflow-scrolling:touch}
+.rule{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:9px}
+.rule h3{margin:0 0 5px;font-size:13.5px;font-weight:800}
+.rule p{margin:0 0 6px;font-size:13px;line-height:1.45;color:var(--ink)}
+.rule p:last-child{margin-bottom:0}
+.rule .ex{font-size:12.5px;color:var(--mut);line-height:1.5}
+.rule .ex b{color:var(--ink)}
+.chip{display:inline-block;background:#eef3fb;border-radius:7px;padding:1px 6px;font-weight:700;font-size:12px}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wtap{background:#fff;border:1px solid var(--line);border-radius:13px;padding:8px 4px 7px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 1px 3px rgba(22,35,58,.05)}
+.wtap .e{font-size:25px;line-height:1.15}
+.wtap .en{font-weight:800;font-size:12.5px;line-height:1.1}
+.wtap .fr{font-size:10.5px;color:var(--mut);line-height:1.1}
+.wtap:active{filter:brightness(.95)}
+.sw{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(0,0,0,.14)}
+.go{margin:8px 12px 10px;flex:0 0 auto;background:#1c3f6e;color:#fff;border-radius:14px;padding:13px;
+  font-weight:800;font-size:15px;text-align:center;box-shadow:0 3px 10px rgba(28,63,110,.26)}
+.go:active{filter:brightness(.9)}
+.hint{font-size:11.5px;color:var(--mut);text-align:center;margin:0 0 8px}
+
+/* ---------- quiz ---------- */
+#quiz{display:none;flex-direction:column;height:100%;min-height:0}
+#quiz.on{display:flex}
+.prog{height:5px;background:#dbe4f0;margin:0 12px;border-radius:99px;overflow:clip;flex:0 0 auto}
+.prog i{display:block;height:100%;background:#4a8fe0;border-radius:99px;transition:width .25s}
+.qzone{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6px 14px;overflow:clip;gap:6px}
+.prompt{font-size:clamp(17px,min(5.6vw,3.6dvh),30px);font-weight:800;text-align:center;line-height:1.22;
+  max-height:3em;overflow:clip;max-width:100%}
+.sub{font-size:clamp(12.5px,1.7dvh,16px);color:var(--mut);text-align:center;line-height:1.3;max-height:2.8em;overflow:clip;font-weight:600}
+.art{font-size:clamp(52px,min(17.5vw,10.5dvh),120px);line-height:1.06;text-align:center;letter-spacing:.04em}
+.art.small{font-size:clamp(34px,min(11vw,7dvh),64px)}
+.bigsw{width:clamp(72px,min(24vw,14dvh),150px);height:clamp(72px,min(24vw,14dvh),150px);border-radius:50%;border:3px solid rgba(0,0,0,.13);
+  box-shadow:inset 0 -6px 14px rgba(0,0,0,.07)}
+.speaker{width:clamp(76px,min(24vw,14dvh),150px);height:clamp(76px,min(24vw,14dvh),150px);border-radius:50%;
+  background:linear-gradient(150deg,#3a6ea8,#1c3f6e);display:grid;place-items:center;
+  box-shadow:0 6px 16px rgba(28,63,110,.32)}
+.speaker svg{width:44%;height:44%;fill:#fff}
+.speaker:active{filter:brightness(1.15)}
+.answers{flex:0 0 auto;height:clamp(146px,23dvh,238px);display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;
+  gap:9px;padding:0 12px;align-content:center;overflow:clip}
+.ans{background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 8px;display:flex;
+  align-items:center;justify-content:center;gap:7px;font-weight:800;font-size:clamp(15px,4.6vw,18px);
+  line-height:1.1;text-align:center;overflow:clip;box-shadow:0 2px 5px rgba(22,35,58,.06)}
+.ans .ae{font-size:1.35em;line-height:1}
+.ans:active{filter:brightness(.95)}
+.ans.right{border-color:var(--ok);background:var(--okbg);filter:none}
+.ans.wrong{border-color:var(--no);background:var(--bg-bad)}
+.ans.dim{opacity:.45}
+.spellwrap{flex:0 0 auto;height:clamp(146px,23dvh,238px);padding:0 12px;display:flex;flex-direction:column;gap:9px;justify-content:center}
+#spellin{width:100%;height:56px;border-radius:14px;border:2px solid var(--line);background:#fff;
+  font-size:22px;font-weight:800;text-align:center;padding:0 12px;color:var(--ink);outline:none;letter-spacing:.06em}
+#spellin:focus{border-color:#4a8fe0}
+#spellin.right{border-color:var(--ok);background:var(--okbg)}
+#spellin.wrong{border-color:var(--no);background:var(--bg-bad)}
+.check{height:56px;border-radius:14px;background:#1c3f6e;color:#fff;font-weight:800;font-size:16px;display:grid;place-items:center}
+.check:active{filter:brightness(.9)}
+.fb{flex:0 0 auto;height:46px;display:flex;align-items:center;justify-content:center;padding:0 14px;
+  font-weight:800;font-size:13.5px;text-align:center;line-height:1.25;transition:color .15s}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--no)}
+
+/* ---------- résultat ---------- */
+#result{display:none;flex-direction:column;height:100%;justify-content:center;align-items:center;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));text-align:center;gap:6px}
+#result.on{display:flex}
+#result .big{font-size:56px;line-height:1}
+#result h2{margin:2px 0 0;font-size:23px;font-weight:800}
+#result .pct{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1}
+#result .stars{display:flex;gap:8px;margin:6px 0 2px}
+#result .stars svg{width:40px;height:40px;fill:#dde4ee}
+#result .stars svg.on{fill:#f5b301;stroke:#c88700;stroke-width:.9}
+#result .msg{font-size:13.5px;color:var(--mut);max-width:320px;line-height:1.45;font-weight:600;min-height:3em}
+.rbtns{display:flex;gap:9px;margin-top:auto;padding-top:14px;width:100%;max-width:340px}
+.rbtns button{flex:1;border-radius:14px;padding:14px;font-weight:800;font-size:14.5px}
+.replay{background:#1c3f6e;color:#fff;box-shadow:0 3px 10px rgba(28,63,110,.26)}
+.menu{background:#fff;border:1px solid var(--line)}
+@media (max-height:600px){
+  .answers{height:118px}
+  .spellwrap{height:118px}
+  .art{font-size:clamp(40px,min(13vw,11dvh),72px)}
+  .qzone{padding:2px 14px;gap:3px}
+  .sub{display:none}
+  .mcard .pg{display:none}
+}
+@media (min-width:620px){ .grid{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr) auto} }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ACCUEIL -->
+  <section id="home">
+    <div class="hhead">
+      <div>
+        <div class="cap">English · Grade 3</div>
+        <h1>Unité 1 — pratique</h1>
+        <div class="sub">Test du 18 novembre</div>
+      </div>
+      <div class="starbox"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.8z"/></svg><span id="tot">0</span></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <button class="reset" id="reset">Effacer mes progrès</button>
+  </section>
+
+  <!-- LEÇON -->
+  <section id="lesson">
+    <div class="top">
+      <button class="iconbtn" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="ttl" id="lTitle"></div>
+      <div class="sc" id="lPg"></div>
+    </div>
+    <div class="lbody" id="lBody"></div>
+    <button class="go" id="lGo">Commencer les exercices</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="top">
+      <button class="iconbtn" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="ttl" id="qTitle"></div>
+      <div class="sc" id="qScore"></div>
+    </div>
+    <div class="prog"><i id="pbar" style="width:0%"></i></div>
+    <div class="qzone" id="qZone"></div>
+    <div class="answers" id="answers"></div>
+    <div class="spellwrap" id="spellwrap" style="display:none">
+      <input id="spellin" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Écris en anglais">
+      <button class="check" id="checkBtn">Vérifier</button>
+    </div>
+    <div class="fb" id="fb"></div>
+  </section>
+
+  <!-- RÉSULTAT -->
+  <section id="result">
+    <div class="big" id="rEmoji">🎉</div>
+    <h2 id="rTitle">Bon travail !</h2>
+    <div class="pct" id="rPct">8/10</div>
+    <div class="stars" id="rStars"></div>
+    <div class="msg" id="rMsg"></div>
+    <div class="rbtns">
+      <button class="menu" id="rMenu">Menu</button>
+      <button class="replay" id="rReplay">Rejouer</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+const BUILD = "en3u1-1";
+
+/* ============ DONNÉES ============ */
+const NATURE = [
+  ["tree","arbre","🌳"],["flower","fleur","🌸"],["grass","herbe","🌿"],["leaf","feuille","🍁"],
+  ["rock","rocher","🪨"],["mountain","montagne","⛰️"],["river","rivière","🏞️"],["sea","mer","🌊"],
+  ["beach","plage","🏖️"],["forest","forêt","🌲"],["sky","ciel","🌤️"],["sun","soleil","☀️"],
+  ["cloud","nuage","☁️"],["rain","pluie","🌧️"],["snow","neige","❄️"],["wind","vent","💨"],
+  ["moon","lune","🌙"],["star","étoile","⭐"],["bird","oiseau","🐦"],["fish","poisson","🐟"],
+  ["butterfly","papillon","🦋"],["bee","abeille","🐝"],["frog","grenouille","🐸"],["squirrel","écureuil","🐿️"]
+];
+const COLOURS = [
+  ["red","rouge","#e0362c"],["blue","bleu","#2f6fe0"],["yellow","jaune","#f2c23c"],["green","vert","#2f9e57"],
+  ["orange","orange","#ef8a2b"],["purple","violet","#8b4ad0"],["pink","rose","#e76fa8"],["brown","brun","#7a4b2a"],
+  ["black","noir","#20232a"],["white","blanc","#ffffff"],["grey","gris","#9aa3ad"]
+];
+const NUMBERS = [["zero",0,"0"],["one",1,"1"],["two",2,"2"],["three",3,"3"],["four",4,"4"],["five",5,"5"],
+  ["six",6,"6"],["seven",7,"7"],["eight",8,"8"],["nine",9,"9"],["ten",10,"10"],["twenty",20,"20"]];
+
+/* ---------- banque « To Be » ---------- */
+const TOBE = [
+  {s:"The cat ___ small.",    a:"is",    t:"Le chat est petit.",        x:"un chat = 1 → is"},
+  {s:"My friends ___ happy.", a:"are",   t:"Mes amis sont contents.",   x:"des amis = plusieurs → are"},
+  {s:"It ___ a big tree.",    a:"is",    t:"C'est un gros arbre.",      x:"it = 1 → is"},
+  {s:"The birds ___ in the sky.", a:"are", t:"Les oiseaux sont dans le ciel.", x:"des oiseaux = plusieurs → are"},
+  {s:"The flowers ___ yellow.", a:"are",  t:"Les fleurs sont jaunes.",   x:"des fleurs = plusieurs → are"},
+  {s:"This rock ___ heavy.",  a:"is",     t:"Ce rocher est lourd.",      x:"this = 1 → is"},
+  {s:"We ___ at school.",     a:"are",    t:"Nous sommes à l'école.",    x:"we → are"},
+  {s:"The sun ___ hot.",      a:"is",     t:"Le soleil est chaud.",      x:"the sun = 1 → is"},
+  {s:"You ___ my friend.",    a:"are",    t:"Tu es mon ami.",            x:"you → are"},
+  {s:"The leaves ___ green.", a:"are",    t:"Les feuilles sont vertes.", x:"des feuilles = plusieurs → are"},
+  {s:"My dog ___ funny.",     a:"is",     t:"Mon chien est drôle.",      x:"1 chien → is"},
+  {s:"These apples ___ red.", a:"are",    t:"Ces pommes sont rouges.",   x:"these = plusieurs → are"},
+  {s:"The river ___ long.",   a:"is",     t:"La rivière est longue.",    x:"1 rivière → is"},
+  {s:"They ___ brothers.",    a:"are",    t:"Ils sont frères.",          x:"they → are"},
+  {s:"She ___ sad.",          a:"is",     t:"Elle est triste.",          x:"she → is"},
+  {s:"The clouds ___ white.", a:"are",    t:"Les nuages sont blancs.",   x:"des nuages = plusieurs → are"}
+];
+const TOBENEG = [
+  {s:"The cat ___ big.",      a:"isn't",  t:"Le chat n'est pas gros.",        x:"« n'est pas » + 1 chat → isn't"},
+  {s:"The birds ___ in the sky.", a:"aren't", t:"Les oiseaux ne sont pas dans le ciel.", x:"« ne sont pas » + plusieurs → aren't"},
+  {s:"The sun ___ cold.",     a:"isn't",  t:"Le soleil n'est pas froid.",     x:"« n'est pas » → isn't"},
+  {s:"My friends ___ here.",  a:"aren't", t:"Mes amis ne sont pas ici.",      x:"« ne sont pas » → aren't"},
+  {s:"It ___ a flower.",      a:"isn't",  t:"Ce n'est pas une fleur.",        x:"« n'est pas » → isn't"},
+  {s:"We ___ ready.",         a:"aren't", t:"Nous ne sommes pas prêts.",      x:"« ne sommes pas » → aren't"},
+  {s:"The leaves ___ brown.", a:"aren't", t:"Les feuilles ne sont pas brunes.", x:"plusieurs → aren't"},
+  {s:"He ___ small.",         a:"isn't",  t:"Il n'est pas petit.",            x:"he → isn't"}
+];
+
+/* ---------- banque « There is / There are » ---------- */
+const THERE = [
+  {s:"___ a tree in the garden.", a:"There is",  t:"Il y a un arbre dans le jardin.",   x:"a tree = 1 → There is"},
+  {s:"___ three birds in the sky.", a:"There are", t:"Il y a trois oiseaux dans le ciel.", x:"three = plusieurs → There are"},
+  {s:"___ a big rock on the beach.", a:"There is", t:"Il y a un gros rocher sur la plage.", x:"a rock = 1 → There is"},
+  {s:"___ many flowers here.", a:"There are",    t:"Il y a beaucoup de fleurs ici.",     x:"many = plusieurs → There are"},
+  {s:"___ one sun in the sky.", a:"There is",    t:"Il y a un soleil dans le ciel.",     x:"one = 1 → There is"},
+  {s:"___ two rivers in the forest.", a:"There are", t:"Il y a deux rivières dans la forêt.", x:"two = plusieurs → There are"},
+  {s:"___ a cat under the table.", a:"There is", t:"Il y a un chat sous la table.",       x:"a cat = 1 → There is"},
+  {s:"___ five apples in the basket.", a:"There are", t:"Il y a cinq pommes dans le panier.", x:"five = plusieurs → There are"},
+  {s:"___ a lot of grass in the park.", a:"There is", t:"Il y a beaucoup de gazon dans le parc.", x:"grass ne se compte pas → There is"},
+  {s:"___ some children in the yard.", a:"There are", t:"Il y a des enfants dans la cour.", x:"children = plusieurs → There are"}
+];
+const THEREQ = [
+  {s:"___ there a lake in the forest?", a:"Is",  t:"Y a-t-il un lac dans la forêt ?",  x:"a lake = 1 → Is there"},
+  {s:"___ there any apples?", a:"Are",           t:"Y a-t-il des pommes ?",            x:"apples = plusieurs → Are there"},
+  {s:"___ there a bird in the tree?", a:"Is",    t:"Y a-t-il un oiseau dans l'arbre ?",x:"a bird = 1 → Is there"},
+  {s:"___ there many stars tonight?", a:"Are",   t:"Y a-t-il beaucoup d'étoiles ce soir ?", x:"many = plusieurs → Are there"},
+  {s:"___ there a river near your house?", a:"Is", t:"Y a-t-il une rivière près de chez toi ?", x:"a river = 1 → Is there"},
+  {s:"___ there any flowers in the garden?", a:"Are", t:"Y a-t-il des fleurs dans le jardin ?", x:"flowers = plusieurs → Are there"}
+];
+
+/* ---------- banque « any / some » ---------- */
+const SOMEANY = [
+  {s:"Are there ___ apples?",          a:"any",  t:"Y a-t-il des pommes ?",           x:"question → any"},
+  {s:"There are ___ flowers here.",    a:"some", t:"Il y a des fleurs ici.",          x:"phrase affirmative → some"},
+  {s:"There isn't ___ water.",         a:"any",  t:"Il n'y a pas d'eau.",             x:"phrase négative → any"},
+  {s:"There is ___ grass in the park.", a:"some", t:"Il y a du gazon dans le parc.",  x:"affirmative → some"},
+  {s:"Is there ___ milk in the fridge?", a:"any", t:"Y a-t-il du lait dans le frigo ?", x:"question → any"},
+  {s:"There are ___ birds in the tree.", a:"some", t:"Il y a des oiseaux dans l'arbre.", x:"affirmative → some"},
+  {s:"Is there ___ sand on the beach?", a:"any",  t:"Y a-t-il du sable sur la plage ?", x:"question → any"},
+  {s:"There aren't ___ clouds today.",  a:"any",  t:"Il n'y a pas de nuages aujourd'hui.", x:"négative → any"},
+  {s:"There is ___ snow on the mountain.", a:"some", t:"Il y a de la neige sur la montagne.", x:"affirmative → some"},
+  {s:"Are there ___ trees in the forest?", a:"any", t:"Y a-t-il des arbres dans la forêt ?", x:"question → any"}
+];
+
+/* ============ OUTILS ============ */
+const $ = (s, r) => (r || document).querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const rnd = n => Math.floor(Math.random() * n);
+const canSpeak = () => typeof window !== "undefined" && "speechSynthesis" in window;
+function say(text, rate) {
+  if (!canSpeak()) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US"; u.rate = rate || 0.82; u.pitch = 1.05;
+    const v = (window.speechSynthesis.getVoices() || []).filter(v => /^en[-_]/i.test(v.lang));
+    if (v.length) u.voice = v.find(v => /en[-_]US/i.test(v.lang)) || v[0];
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+let AC = null;
+function beep(ok) {
+  try {
+    if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+    const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
+    o.type = "sine"; o.frequency.value = ok ? 880 : 220;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.16, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (ok ? 0.18 : 0.26));
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + 0.3);
+    if (ok) {
+      const o2 = AC.createOscillator(), g2 = AC.createGain();
+      o2.type = "sine"; o2.frequency.value = 1320;
+      g2.gain.setValueAtTime(0.0001, t + 0.1);
+      g2.gain.exponentialRampToValueAtTime(0.13, t + 0.12);
+      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+      o2.connect(g2); g2.connect(AC.destination); o2.start(t + 0.1); o2.stop(t + 0.32);
+    }
+  } catch (e) {}
+}
+
+/* ============ GÉNÉRATEURS ============ */
+function vocabQ(w, pool, kind) {
+  if (kind === "listen" && !canSpeak()) kind = "en2fr";
+  const [en, fr, art] = w;
+  const distract = (n) => shuffle(pool.filter(x => x[0] !== en)).slice(0, n);
+  if (kind === "fr2en") {
+    return {
+      type: "mcq", art: art, small: false,
+      prompt: "« " + fr + " » en anglais, c'est…",
+      sub: "Choisis le mot anglais",
+      choices: shuffle([{ v: en }, ...distract(3).map(x => ({ v: x[0] }))]),
+      answer: en, say: en, tip: fr + " = " + en
+    };
+  }
+  if (kind === "en2fr") {
+    return {
+      type: "mcq", art: art, small: false,
+      prompt: "Que veut dire « " + en + " » ?",
+      sub: "Choisis en français",
+      choices: shuffle([{ v: fr }, ...distract(3).map(x => ({ v: x[1] }))]),
+      answer: fr, say: en, tip: en + " = " + fr
+    };
+  }
+  if (kind === "listen") {
+    return {
+      type: "listen", say: en,
+      prompt: "Écoute et choisis",
+      sub: "Touche le haut-parleur",
+      choices: shuffle([{ v: en, a: art }, ...distract(3).map(x => ({ v: x[0], a: x[2] }))]),
+      answer: en, tip: en + " = " + fr
+    };
+  }
+  return {
+    type: "spell", art: art,
+    prompt: "Écris le mot anglais",
+    sub: fr,
+    answer: en, say: en, tip: en,
+    hint: en[0].toUpperCase() + "… (" + en.length + " lettres)"
+  };
+}
+
+function genVocab(pool, n) {
+  const kinds = ["fr2en", "listen", "en2fr", "spell"];
+  const words = shuffle(pool).slice(0, n);
+  const out = words.map((w, i) => vocabQ(w, pool, kinds[(i + rnd(4)) % 4]));
+  // re-tirer les types pour varier
+  out.forEach((q, i) => {
+    if (i % 4 === 3 && q.type !== "spell") Object.assign(q, vocabQ(words[i], pool, "spell"));
+    if (i % 4 === 1 && q.type !== "listen" && canSpeak()) Object.assign(q, vocabQ(words[i], pool, "listen"));
+  });
+  return out;
+}
+
+function genColours(n) {
+  const base = genVocab(COLOURS, n);
+  // insérer 3 questions « quelle couleur ? » avec pastille
+  for (let i = 0; i < base.length; i++) {
+    if (base[i].type !== "mcq") continue;
+    const c = COLOURS.find(x => x[0] === base[i].answer) || COLOURS.find(x => x[1] === base[i].answer);
+    if (!c) continue;
+    base[i] = {
+      type: "mcq", swatch: c[2],
+      prompt: "Quelle couleur vois-tu ?",
+      sub: "Choisis le mot anglais",
+      choices: shuffle([{ v: c[0] }, ...shuffle(COLOURS.filter(x => x[0] !== c[0])).slice(0, 3).map(x => ({ v: x[0] }))]),
+      answer: c[0], say: c[0], tip: c[0] + " = " + c[1]
+    };
+    break;
+  }
+  return base;
+}
+
+function numArt(n) {
+  const emo = ["🍎", "⭐", "🌻", "🐟", "🍓"][rnd(5)];
+  const k = Math.min(n, 10);
+  if (n === 20) return emo.repeat(10) + " ×2";
+  return emo.repeat(k);
+}
+function genNumbers(n) {
+  const out = [];
+  const words = shuffle(NUMBERS);
+  for (let i = 0; i < n; i++) {
+    const w = words[i % words.length];
+    const kind = i % 4;
+    if (kind === 0) {
+      out.push({
+        type: "mcq", art: numArt(w[1]), small: w[1] > 3,
+        prompt: "Combien ?", sub: "Choisis le mot anglais en lettres",
+        choices: shuffle([{ v: w[0] }, ...shuffle(NUMBERS.filter(x => x[0] !== w[0])).slice(0, 3).map(x => ({ v: x[0] }))]),
+        answer: w[0], say: w[0], tip: w[2] + " = " + w[0]
+      });
+    } else if (kind === 1 && canSpeak()) {
+      out.push({
+        type: "listen", say: w[0],
+        prompt: "Écoute et choisis le chiffre", sub: "Touche le haut-parleur",
+        choices: shuffle([{ v: w[2] }, ...shuffle(NUMBERS.filter(x => x[0] !== w[0])).slice(0, 3).map(x => ({ v: x[2] }))]),
+        answer: w[2], tip: w[0] + " = " + w[2]
+      });
+    } else if (kind === 2) {
+      out.push({
+        type: "mcq", art: w[1] === 20 ? "2️⃣0️⃣" : String(w[1]).replace(/\d/g, d => ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"][d]),
+        prompt: "Comment dit-on « " + w[1] + " » ?", sub: "Choisis le mot anglais",
+        choices: shuffle([{ v: w[0] }, ...shuffle(NUMBERS.filter(x => x[0] !== w[0])).slice(0, 3).map(x => ({ v: x[0] }))]),
+        answer: w[0], say: w[0], tip: w[1] + " = " + w[0]
+      });
+    } else {
+      out.push({
+        type: "spell", art: w[2] + "️⃣",
+        prompt: "Écris le mot anglais", sub: "Le chiffre " + w[1],
+        answer: w[0], say: w[0], tip: w[0],
+        hint: w[0][0].toUpperCase() + "… (" + w[0].length + " lettres)"
+      });
+    }
+  }
+  return out;
+}
+
+function fromBank(bank, choices, n) {
+  if (n <= 0) return [];
+  const nb = Math.max(1, Math.min(n, bank.length));
+  return shuffle(bank).slice(0, nb).map(b => ({
+    type: "mcq", prompt: b.s, sub: b.t,
+    choices: shuffle(choices.map(c => ({ v: c }))), answer: b.a,
+    say: b.s.replace(/_{2,}/g, b.a), tip: b.x
+  }));
+}
+function genToBe(n) {
+  const pos = Math.max(1, Math.ceil(n * 0.6));
+  const neg = Math.max(0, n - pos);
+  const all = ["is", "are", "isn't", "aren't"];
+  const a = fromBank(shuffle(TOBE).slice(0, pos), all, pos);
+  const b = fromBank(shuffle(TOBENEG).slice(0, neg), all, neg);
+  return shuffle(a.concat(b));
+}
+function genThere(n) {
+  const nq = n >= 4 ? Math.max(2, Math.round(n * 0.3)) : 0;
+  const a = fromBank(THERE, ["There is", "There are"], n - nq);
+  const b = fromBank(THEREQ, ["Is", "Are"], nq);
+  return shuffle(a.concat(b));
+}
+function genSomeAny(n) {
+  return fromBank(SOMEANY, ["some", "any"], n);
+}
+
+/* ============ MODULES ============ */
+const MODULES = [
+  { id: "nature", e: "🌳", name: "Nature", pg: "p. 23", bar: "#2f9e6e", count: 10, desc: "24 mots : arbre, fleur, oiseau…",
+    title: "Nature — vocabulaire", gen: () => genVocab(NATURE, 10),
+    lesson: { words: NATURE, note: "Touche un mot pour l'entendre. Les mots de la nature : dis-les à voix haute, ça aide à les retenir." } },
+  { id: "colours", e: "🎨", name: "Colours", pg: "p. 32", bar: "#e0568a", count: 10, desc: "11 couleurs à reconnaître",
+    title: "Colours — couleurs", gen: () => genColours(10),
+    lesson: { words: COLOURS, note: "Touche une couleur pour l'entendre." } },
+  { id: "numbers", e: "🔢", name: "Numbers", pg: "p. 13", bar: "#3d7fe0", count: 10, desc: "de 0 à 10, puis 20",
+    title: "Numbers — 0 à 10 et 20", gen: () => genNumbers(10),
+    lesson: { words: NUMBERS.map(x => [x[0], x[2], "🔢"]), note: "De 0 à 10, puis 20 (twenty). Touche un mot pour l'entendre." } },
+  { id: "tobe", e: "🅰️", name: "Verb To Be", pg: "p. 7", bar: "#b06cd6", count: 10, desc: "is / are · isn't / aren't",
+    title: "Verb To Be", gen: () => genToBe(10),
+    lesson: { rules: [
+      ["is", "1 seule chose ou 1 seule personne", "The cat <b>is</b> small. · It <b>is</b> a tree."],
+      ["are", "plusieurs choses ou plusieurs personnes", "The birds <b>are</b> in the sky. · We <b>are</b> at school."],
+      ["isn't", "= is not → « n'est pas »", "The sun <b>isn't</b> cold."],
+      ["aren't", "= are not → « ne sont pas »", "My friends <b>aren't</b> here."]
+    ] } },
+  { id: "there", e: "📦", name: "There is / There are", pg: "p. 27-28", bar: "#e08a2e", count: 10, desc: "= Il y a… (1 ou plusieurs)",
+    title: "There is / There are", gen: () => genThere(10),
+    lesson: { rules: [
+      ["There is", "= Il y a … (1 seule chose)", "There <b>is</b> a tree. · There <b>is</b> one sun."],
+      ["There are", "= Il y a … (plusieurs choses)", "There <b>are</b> three birds. · There <b>are</b> many flowers."],
+      ["Is there…?", "= Y a-t-il … ? (1 chose)", "<b>Is</b> there a lake?"],
+      ["Are there…?", "= Y a-t-il … ? (plusieurs)", "<b>Are</b> there any apples?"]
+    ] } },
+  { id: "someany", e: "✳️", name: "Any / Some", pg: "p. 28", bar: "#0f9aa8", count: 10, desc: "« du, de la, des »",
+    title: "Any / Some", gen: () => genSomeAny(10),
+    lesson: { rules: [
+      ["some", "« du / de la / des » → phrases affirmatives", "There are <b>some</b> flowers."],
+      ["any", "« du / de la / des » → questions et négations", "Are there <b>any</b> apples? · There isn't <b>any</b> water."]
+    ] } }
+];
+const DEFI = { id: "defi", e: "🏆", name: "Défi final", pg: "tout mélangé", bar: "#1c3f6e", count: 12,
+  title: "Défi final",
+  gen: () => {
+    const nat = shuffle(NATURE).slice(0, 3);
+    const col = shuffle(COLOURS).slice(0, 3);
+    return shuffle([
+      vocabQ(nat[0], NATURE, "spell"),
+      vocabQ(nat[1], NATURE, "listen"),
+      vocabQ(nat[2], NATURE, "fr2en"),
+      vocabQ(col[0], COLOURS, "fr2en"),
+      vocabQ(col[1], COLOURS, "listen"),
+      vocabQ(col[2], COLOURS, "en2fr"),
+      ...genNumbers(2),
+      ...genToBe(2),
+      ...genThere(1),
+      ...genSomeAny(1)
+    ]);
+  } };
+
+/* ============ ÉTAT ============ */
+const KEY = "en3u1_v1";
+let S = { view: "home", mod: null, qs: [], i: 0, hits: 0, locked: false, best: {} };
+try { const raw = localStorage.getItem(KEY); if (raw) { const o = JSON.parse(raw); if (o && o.best) S.best = o.best; } } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ best: S.best })); } catch (e) {} }
+function starsFor(pct) { return pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 50 ? 1 : 0; }
+function totalStars() { return Object.keys(S.best).reduce((t, k) => t + starsFor(S.best[k]), 0); }
+
+/* ============ ICÔNES ============ */
+const STAR_SVG = '<svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.8z"/></svg>';
+function starsHTML(n) { let h = ""; for (let i = 0; i < 3; i++) h += STAR_SVG.replace("<svg", '<svg class="' + (i < n ? "on" : "") + '"'); return h; }
+
+/* ============ ACCUEIL ============ */
+function renderHome() {
+  S.view = "home";
+  show("home");
+  $("#tot").textContent = totalStars() + "/" + (MODULES.length + 1) * 3;
+  const g = $("#grid");
+  g.innerHTML = "";
+  MODULES.forEach(m => {
+    const b = document.createElement("button");
+    b.className = "mcard";
+    b.setAttribute("data-mod", m.id);
+    b.innerHTML = '<span class="bar" style="background:' + m.bar + '"></span>' +
+      '<div class="ico">' + m.e + '</div>' +
+      '<div><div class="nm">' + m.name + '</div><div class="pg">' + m.pg + '</div>' +
+      '<div class="desc">' + (m.desc || "") + '</div></div>' +
+      '<div class="stars">' + starsHTML(starsFor(S.best[m.id] || 0)) + '</div>';
+    b.onclick = () => openLesson(m);
+    g.appendChild(b);
+  });
+  const d = document.createElement("button");
+  d.className = "defi";
+  d.setAttribute("data-mod", "defi");
+  d.innerHTML = '<span class="ico">🏆</span><div><div class="t">Défi final</div><div class="s">12 questions mélangées</div></div>' +
+    '<div class="stars">' + starsHTML(starsFor(S.best.defi || 0)) + '</div>';
+  d.onclick = () => startQuiz(DEFI);
+  g.appendChild(d);
+}
+
+/* ============ LEÇON ============ */
+function openLesson(m) {
+  S.mod = m;
+  S.view = "lesson";
+  show("lesson");
+  $("#lTitle").textContent = m.title;
+  $("#lPg").textContent = m.pg;
+  const body = $("#lBody");
+  body.innerHTML = "";
+  const L = m.lesson || {};
+  if (L.rules) {
+    L.rules.forEach(([k, why, ex]) => {
+      const d = document.createElement("div");
+      d.className = "rule";
+      d.innerHTML = '<h3><span class="chip">' + k + '</span></h3><p>' + why + '</p><p class="ex">' + ex + '</p>';
+      body.appendChild(d);
+    });
+  }
+  if (L.words) {
+    const note = document.createElement("p");
+    note.className = "hint";
+    note.textContent = L.note || "";
+    body.appendChild(note);
+    const wg = document.createElement("div");
+    wg.className = "wgrid";
+    L.words.forEach(w => {
+      const b = document.createElement("button");
+      b.className = "wtap";
+      const art = m.id === "colours"
+        ? '<span class="sw" style="background:' + w[2] + '"></span>'
+        : '<span class="e">' + w[2] + '</span>';
+      b.innerHTML = art + '<span class="en">' + w[0] + '</span><span class="fr">' + w[1] + '</span>';
+      b.onclick = () => { say(w[0]); beep(true); };
+      wg.appendChild(b);
+    });
+    body.appendChild(wg);
+  }
+  $("#lGo").onclick = () => startQuiz(m);
+}
+
+/* ============ QUIZ ============ */
+function show(id) {
+  ["home", "lesson", "quiz", "result"].forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.classList.toggle("on", k === id);
+    if (k === "home") el.style.display = (k === id) ? "flex" : "none";
+  });
+  $("#home").style.display = (id === "home") ? "flex" : "none";
+  if (id === "lesson" || id === "quiz" || id === "result") $("#home").style.display = "none";
+}
+function startQuiz(m) {
+  S.mod = m; S.view = "quiz"; S.i = 0; S.hits = 0; S.locked = false;
+  S.qs = m.gen();
+  show("quiz");
+  $("#qTitle").textContent = m.name;
+  renderQ();
+}
+function renderQ() {
+  const q = S.qs[S.i];
+  S.locked = false;
+  $("#qScore").textContent = S.hits + "/" + S.qs.length;
+  $("#pbar").style.width = (S.i / S.qs.length * 100) + "%";
+  $("#fb").textContent = ""; $("#fb").className = "fb";
+  const z = $("#qZone");
+  z.innerHTML = "";
+  const p = document.createElement("div"); p.className = "prompt"; p.textContent = q.prompt; z.appendChild(p);
+  if (q.sub) { const s = document.createElement("div"); s.className = "sub"; s.textContent = q.sub; z.appendChild(s); }
+  if (q.type === "listen") {
+    const b = document.createElement("button");
+    b.className = "speaker"; b.id = "spk";
+    b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4zM14 3.2v2.1a7 7 0 010 13.4v2.1a9 9 0 000-17.6z"/></svg>';
+    b.onclick = () => say(q.say, 0.75);
+    z.appendChild(b);
+    setTimeout(() => say(q.say, 0.75), 260);
+  } else if (q.swatch) {
+    const d = document.createElement("div"); d.className = "bigsw"; d.style.background = q.swatch; z.appendChild(d);
+  } else if (q.art) {
+    const d = document.createElement("div"); d.className = "art" + (q.small ? " small" : "");
+    d.style.fontSize = q.small ? "" : "";
+    d.textContent = q.art; z.appendChild(d);
+  }
+
+  const ansBox = $("#answers"), sp = $("#spellwrap");
+  if (q.type === "spell") {
+    ansBox.style.display = "none"; sp.style.display = "flex";
+    const inp = $("#spellin");
+    inp.value = ""; inp.className = ""; inp.disabled = false;
+    inp.placeholder = q.hint || "Écris en anglais";
+    $("#checkBtn").disabled = false;
+    $("#checkBtn").textContent = "Vérifier";
+    setTimeout(() => { try { inp.focus(); } catch (e) {} }, 120);
+  } else {
+    sp.style.display = "none"; ansBox.style.display = "grid";
+    ansBox.innerHTML = "";
+    q.choices.forEach(c => {
+      const b = document.createElement("button");
+      b.className = "ans"; b.setAttribute("data-v", c.v);
+      b.innerHTML = (c.a ? '<span class="ae">' + c.a + '</span>' : "") + "<span>" + c.v + "</span>";
+      b.onclick = () => answer(c.v, b);
+      ansBox.appendChild(b);
+    });
+  }
+}
+function answer(val, btn) {
+  if (S.locked) return;
+  const q = S.qs[S.i];
+  S.locked = true;
+  const good = String(val).trim().toLowerCase() === String(q.answer).trim().toLowerCase();
+  const fb = $("#fb");
+  if (q.type === "spell") {
+    const inp = $("#spellin");
+    inp.className = good ? "right" : "wrong"; inp.disabled = true;
+    $("#checkBtn").textContent = good ? "Bravo !" : "La réponse : " + q.answer;
+  } else {
+    const btns = Array.from(document.querySelectorAll("#answers .ans"));
+    btns.forEach(b => {
+      const v = b.getAttribute("data-v");
+      if (v === q.answer) { b.classList.add("right"); b.classList.remove("dim", "wrong"); }
+      else if (b === btn) { b.classList.add("wrong"); b.classList.remove("dim", "right"); }
+      else b.classList.add("dim");
+      b.onclick = null;
+    });
+  }
+  if (good) { S.hits++; beep(true); fb.className = "fb ok"; fb.textContent = "Bravo ! 🌟"; say(q.say || q.answer); }
+  else { beep(false); fb.className = "fb no"; fb.textContent = "La bonne réponse : " + q.answer; }
+  $("#qScore").textContent = S.hits + "/" + S.qs.length;
+  setTimeout(next, good ? 800 : 1500);
+}
+function next() {
+  if (S.view !== "quiz") return;
+  S.i++;
+  if (S.i >= S.qs.length) { finish(); return; }
+  renderQ();
+}
+function finish() {
+  const pct = Math.round(S.hits / S.qs.length * 100);
+  const id = S.mod.id;
+  if (!S.best[id] || pct > S.best[id]) { S.best[id] = pct; save(); }
+  const st = starsFor(pct);
+  S.view = "result";
+  show("result");
+  $("#rPct").textContent = S.hits + "/" + S.qs.length + " — " + pct + " %";
+  $("#rStars").innerHTML = starsHTML(st);
+  $("#rEmoji").textContent = pct >= 90 ? "🏆" : pct >= 70 ? "🎉" : pct >= 50 ? "👍" : "💪";
+  $("#rTitle").textContent = pct >= 90 ? "Excellent !" : pct >= 70 ? "Bon travail !" : pct >= 50 ? "Pas mal !" : "Continue !";
+  const msgs = {
+    3: "Tu es prêt pour le test du 18 novembre.",
+    2: "Presque parfait — encore une pratique et c'est gagné.",
+    1: "Tu progresses. Rejoue pour viser les 3 étoiles.",
+    0: "Pas de panique : écoute les mots dans la leçon, puis réessaie."
+  };
+  $("#rMsg").textContent = msgs[st];
+  $("#rReplay").onclick = () => startQuiz(S.mod);
+  $("#rMenu").onclick = () => renderHome();
+}
+function spellSubmit() {
+  if (S.locked) return;
+  const q = S.qs[S.i];
+  if (q.type !== "spell") return;
+  const v = $("#spellin").value.trim();
+  if (!v) return;
+  answer(v);
+}
+
+/* ============ NAV ============ */
+document.querySelectorAll("[data-back]").forEach(b => b.onclick = () => {
+  const l = $("#spellin"); if (l) l.blur();
+  if (canSpeak()) { try { window.speechSynthesis.cancel(); } catch (er) {} }
+  S.locked = true;
+  renderHome();
+});
+$("#checkBtn").onclick = spellSubmit;
+$("#spellin").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); spellSubmit(); } });
+$("#reset").onclick = () => { S.best = {}; save(); renderHome(); };
+
+/* ============ BOOT ============ */
+if (canSpeak()) { try { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => {}; } catch (e) {} }
+renderHome();
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+window.APP = { get S() { return S; }, renderHome, startQuiz, openLesson, answer, next, finish, spellSubmit, starsFor, totalStars, MODULES, DEFI, genVocab, genNumbers, genToBe, genThere, genSomeAny, genColours, NATURE, COLOURS, NUMBERS, BUILD };
+</script>
+</body>
+</html>

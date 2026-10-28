@@ -1,0 +1,19 @@
+{
+  "name": "Anglais 3e année — Unité 1",
+  "short_name": "Anglais 3",
+  "description": "Pratique du vocabulaire et de la grammaire de l'unité 1 (test du 18 novembre) : nature, couleurs, nombres, verb to be, there is/there are, some/any.",
+  "lang": "fr-CA",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef2fb",
+  "theme_color": "#1c3f6e",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
