@@ -1,5 +1,5 @@
 // Service worker — anglais3 (réseau d'abord pour le HTML, cache sinon)
-const CACHE = "anglais3-v1";
+const CACHE = "anglais3-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -24,6 +24,8 @@ self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
   const isHTML = req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html");
+  // le manifeste ne doit jamais être servi depuis un cache périmé : Chrome y lit l'identité de l'app
+  const isManifest = req.url.includes("manifest.webmanifest") || (req.headers.get("accept") || "").includes("application/manifest+json");
   if (isHTML) {
     // réseau d'abord : une mise à jour arrive au premier rechargement
     e.respondWith(
@@ -32,6 +34,16 @@ self.addEventListener("fetch", e => {
         caches.open(CACHE).then(c => c.put("./index.html", copy));
         return r;
       }).catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+  if (isManifest) {
+    e.respondWith(
+      fetch(req).then(r => {
+        const copy = r.clone();
+        caches.open(CACHE).then(c => c.put("./manifest.webmanifest", copy));
+        return r;
+      }).catch(() => caches.match("./manifest.webmanifest"))
     );
     return;
   }
