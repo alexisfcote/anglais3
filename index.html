@@ -2,7 +2,7 @@
 <html lang="fr-CA">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <meta name="theme-color" content="#1c3f6e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -26,7 +26,11 @@ body{
   color:var(--ink); overflow:clip;
   -webkit-text-size-adjust:100%;
 }
-#app{height:100dvh;display:flex;flex-direction:column;max-width:620px;margin:0 auto;width:100%}
+#app{height:var(--ui-h,100dvh);display:flex;flex-direction:column;max-width:620px;margin:0 auto;width:100%;overflow:clip}
+body.kb .sub{display:none}
+body.kb .qzone{gap:2px;padding-top:2px;padding-bottom:2px}
+body.kb .art{font-size:clamp(30px,8vw,46px)}
+body.kb .bigsw{width:clamp(56px,16vw,80px);height:clamp(56px,16vw,80px)}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---------- écran d'accueil ---------- */
@@ -113,7 +117,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   box-shadow:0 6px 16px rgba(28,63,110,.32)}
 .speaker svg{width:44%;height:44%;fill:#fff}
 .speaker:active{filter:brightness(1.15)}
-.answers{flex:0 0 auto;height:clamp(146px,23dvh,238px);display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;
+.answers{flex:0 0 auto;height:clamp(118px,calc(var(--ui-h,900px) * .25),238px);display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;
   gap:9px;padding:0 12px;align-content:center;overflow:clip}
 .ans{background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 8px;display:flex;
   align-items:center;justify-content:center;gap:7px;font-weight:800;font-size:clamp(15px,4.6vw,18px);
@@ -124,7 +128,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .ans.right{border-color:var(--ok);background:var(--okbg);filter:none}
 .ans.wrong{border-color:var(--no);background:var(--bg-bad)}
 .ans.dim{opacity:.45}
-.spellwrap{flex:0 0 auto;height:clamp(146px,23dvh,238px);padding:0 12px;display:flex;flex-direction:column;gap:9px;justify-content:center}
+.spellwrap{flex:0 0 auto;height:clamp(118px,calc(var(--ui-h,900px) * .25),238px);padding:0 12px;display:flex;flex-direction:column;gap:9px;justify-content:center}
 #spellin{width:100%;height:56px;border-radius:14px;border:2px solid var(--line);background:#fff;
   font-size:22px;font-weight:800;text-align:center;padding:0 12px;color:var(--ink);outline:none;letter-spacing:.06em}
 #spellin:focus{border-color:#4a8fe0}
@@ -224,7 +228,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 <script>
 "use strict";
-const BUILD = "en3u1-2";
+const BUILD = "en3u1-3";
 
 /* ============ DONNÉES ============ */
 const NATURE = [
@@ -695,7 +699,7 @@ function renderQ() {
     inp.placeholder = q.hint || "Écris en anglais";
     $("#checkBtn").disabled = false;
     $("#checkBtn").textContent = "Vérifier";
-    setTimeout(() => { try { inp.focus(); } catch (e) {} }, 120);
+    setTimeout(() => { try { inp.focus({ preventScroll: true }); } catch (e) { try { inp.focus(); } catch (e2) {} } syncHeight(); pinTop(); }, 120);
   } else {
     sp.style.display = "none"; ansBox.style.display = "grid";
     ansBox.innerHTML = "";
@@ -783,13 +787,39 @@ $("#checkBtn").onclick = spellSubmit;
 $("#spellin").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); spellSubmit(); } });
 $("#reset").onclick = () => { S.best = {}; save(); renderHome(); };
 
+/* ============ HAUTEUR VISIBLE (clavier du téléphone) ============ */
+let FULL_H = window.innerHeight || 900;
+function pinTop() { try { window.scrollTo(0, 0); } catch (e) {} }
+function syncHeight() {
+  const vv = window.visualViewport;
+  const h = Math.round((vv && vv.height) || window.innerHeight || FULL_H);
+  document.documentElement.style.setProperty("--ui-h", h + "px");
+  // clavier ouvert : la zone visible rétrécit nettement sous la hauteur de référence
+  const kb = (FULL_H - h) > 120;
+  document.body.classList.toggle("kb", kb);
+  return { h, kb, full: FULL_H, viewportHasFocus: document.activeElement === $("#spellin") };
+}
+window.addEventListener("resize", syncHeight);
+window.addEventListener("orientationchange", () => { FULL_H = window.innerHeight || FULL_H; syncHeight(); });
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", syncHeight);
+  window.visualViewport.addEventListener("scroll", () => { syncHeight(); pinTop(); });
+}
+// le navigateur ne doit jamais déplacer la page pour montrer le champ
+document.addEventListener("focusin", () => {
+  syncHeight();
+  setTimeout(() => { syncHeight(); pinTop(); }, 60);
+});
+document.addEventListener("focusout", () => setTimeout(syncHeight, 60));
+
 /* ============ BOOT ============ */
+syncHeight();
 if (canSpeak()) { try { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => {}; } catch (e) {} }
 renderHome();
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
-window.APP = { get S() { return S; }, renderHome, startQuiz, openLesson, answer, next, finish, spellSubmit, starsFor, totalStars, MODULES, DEFI, genVocab, genNumbers, genToBe, genThere, genSomeAny, genColours, NATURE, COLOURS, NUMBERS, BUILD };
+window.APP = { get S() { return S; }, renderHome, startQuiz, openLesson, answer, next, finish, spellSubmit, starsFor, totalStars, syncHeight, MODULES, DEFI, genVocab, genNumbers, genToBe, genThere, genSomeAny, genColours, NATURE, COLOURS, NUMBERS, BUILD };
 </script>
 </body>
 </html>
