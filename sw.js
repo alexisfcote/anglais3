@@ -1,5 +1,5 @@
 // Service worker — anglais3 (réseau d'abord pour le HTML, cache sinon)
-const CACHE = "anglais3-v5";
+const CACHE = "anglais3-v6";
 const ASSETS = [
   "./",
   "./index.html",

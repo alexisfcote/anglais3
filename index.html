@@ -36,11 +36,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ---------- écran d'accueil ---------- */
 #home{display:flex;flex-direction:column;height:100%;min-height:0;padding:0 12px 8px;gap:8px}
 .hhead{padding:10px 4px 6px;display:flex;align-items:center;gap:10px}
-.hhead .cap{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.hhead .cap{font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700}
 .hhead h1{font-size:clamp(20px,5.8vw,26px);margin:0;line-height:1.15;font-weight:800;letter-spacing:-.01em}
-.hhead .sub{font-size:14px;color:var(--mut);margin-top:2px}
+.hhead .sub{font-size:16px;color:var(--mut);margin-top:2px}
 .starbox{margin-left:auto;display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);
-  border-radius:999px;padding:6px 12px;font-weight:800;font-size:16px;min-width:74px;justify-content:center}
+  border-radius:999px;padding:6px 13px;font-weight:800;font-size:17px;min-width:78px;justify-content:center}
 .starbox svg{width:15px;height:15px;fill:#f5b301}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;flex:1;min-height:0;align-content:stretch;grid-template-rows:repeat(3,1fr) auto}
 .mcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:9px 10px;
@@ -50,8 +50,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .mcard .ico{font-size:clamp(34px,11vw,54px);line-height:1}
 .mcard .nm{font-weight:800;font-size:clamp(16px,4.9vw,21px);line-height:1.14;margin-top:0;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-.mcard .pg{font-size:12.5px;color:var(--mut);margin-top:1px;font-weight:700}
-.mcard .desc{font-size:clamp(12px,3.3vw,14.5px);color:#7e8ba1;margin-top:4px;line-height:1.28;font-weight:600;overflow-wrap:anywhere}
+.mcard .pg{font-size:14px;color:var(--mut);margin-top:1px;font-weight:700}
+.mcard .desc{font-size:clamp(14px,3.9vw,16.5px);color:#7e8ba1;margin-top:4px;line-height:1.28;font-weight:600;overflow-wrap:anywhere}
 .mcard .stars{margin-top:3px;display:flex;gap:3px;height:13px}
 .mcard .stars svg{width:13px;height:13px;fill:#dde4ee}
 .mcard .stars svg.on{fill:#f5b301}
@@ -60,12 +60,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .defi{grid-column:1/-1;background:linear-gradient(120deg,#1c3f6e,#3a6ea8);color:#fff;border:0;
   border-radius:16px;padding:9px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 3px 10px rgba(28,63,110,.28)}
 .defi .ico{font-size:24px}
-.defi .t{font-weight:800;font-size:16.5px;line-height:1.1}
-.defi .s{font-size:13px;opacity:.85;margin-top:2px}
+.defi .t{font-weight:800;font-size:18px;line-height:1.1}
+.defi .s{font-size:15px;opacity:.85;margin-top:2px}
 .defi .stars{margin-left:auto;display:flex;gap:2px}
 .defi .stars svg{width:12px;height:12px;fill:rgba(255,255,255,.32)}
 .defi .stars svg.on{fill:#f7c948}
-.reset{margin-top:7px;font-size:12.5px;color:var(--mut);text-decoration:underline;align-self:flex-start}
+.reset{margin-top:7px;font-size:14px;color:var(--mut);text-decoration:underline;align-self:flex-start}
 
 /* ---------- entête commune ---------- */
 .top{display:flex;align-items:center;gap:8px;padding:8px 10px 6px;flex:0 0 auto}
@@ -73,17 +73,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   display:grid;place-items:center;flex:0 0 auto}
 .iconbtn svg{width:20px;height:20px;stroke:var(--ink);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .top .ttl{font-weight:800;font-size:17px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .sc{margin-left:auto;font-weight:800;font-size:15px;color:var(--mut);white-space:nowrap;min-width:52px;text-align:right}
+.top .sc{margin-left:auto;font-weight:800;font-size:17px;color:var(--mut);white-space:nowrap;min-width:52px;text-align:right}
 
 /* ---------- leçon ---------- */
 #lesson{display:none;flex-direction:column;height:100%;min-height:0}
 #lesson.on{display:flex}
 .lbody{flex:1;min-height:0;overflow-y:auto;padding:2px 12px 12px;-webkit-overflow-scrolling:touch}
 .rule{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:9px}
-.rule h3{margin:0 0 5px;font-size:15.5px;font-weight:800}
-.rule p{margin:0 0 6px;font-size:15px;line-height:1.45;color:var(--ink)}
+.rule h3{margin:0 0 6px;font-size:17px;font-weight:800}
+.rule p{margin:0 0 7px;font-size:16.5px;line-height:1.45;color:var(--ink)}
 .rule p:last-child{margin-bottom:0}
-.rule .ex{font-size:14px;color:var(--mut);line-height:1.5}
+.rule .ex{font-size:15.5px;color:var(--mut);line-height:1.5}
 .rule .ex b{color:var(--ink)}
 .chip{display:inline-block;background:#eef3fb;border-radius:7px;padding:2px 7px;font-weight:700;font-size:13.5px}
 .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -97,7 +97,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .go{margin:8px 12px 10px;flex:0 0 auto;background:#1c3f6e;color:#fff;border-radius:14px;padding:13px;
   font-weight:800;font-size:17px;text-align:center;box-shadow:0 3px 10px rgba(28,63,110,.26)}
 .go:active{filter:brightness(.9)}
-.hint{font-size:13.5px;color:var(--mut);text-align:center;margin:0 0 8px}
+.hint{font-size:16px;color:var(--mut);text-align:center;margin:0 0 8px}
 
 /* ---------- quiz ---------- */
 #quiz{display:none;flex-direction:column;height:100%;min-height:0}
@@ -108,7 +108,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   padding:6px 14px;overflow:clip;gap:6px}
 .prompt{font-size:clamp(20px,min(6.6vw,4.2dvh),33px);font-weight:800;text-align:center;line-height:1.22;
   max-height:3em;overflow:clip;max-width:100%}
-.sub{font-size:clamp(14.5px,2dvh,19px);color:var(--mut);text-align:center;line-height:1.3;max-height:2.8em;overflow:clip;font-weight:600}
+.sub{font-size:clamp(16px,2.2dvh,21px);color:var(--mut);text-align:center;line-height:1.3;max-height:2.8em;overflow:clip;font-weight:600}
 .art{font-size:clamp(52px,min(17.5vw,10.5dvh),120px);line-height:1.06;text-align:center;letter-spacing:.04em}
 .art.small{font-size:clamp(34px,min(11vw,7dvh),64px)}
 .bigsw{width:clamp(72px,min(24vw,14dvh),150px);height:clamp(72px,min(24vw,14dvh),150px);border-radius:50%;border:3px solid rgba(0,0,0,.13);
@@ -229,7 +229,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 <script>
 "use strict";
-const BUILD = "en3u1-4";
+const BUILD = "en3u1-5";
 
 /* ============ DONNÉES ============ */
 const NATURE = [
